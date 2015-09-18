@@ -1,0 +1,38 @@
+class Solution {
+	bool flag;
+public:
+	int binarySearch(int st, int end, int* a, int key) {
+		flag = false;
+		int lo = st, hi = end;
+		while (lo <= hi) {
+			int mi = (lo + hi) / 2;
+			if (a[mi] == key) {
+				flag = true;
+				return mi;
+			}
+			else if (a[mi] < key) 
+				lo = mi + 1;
+			else 
+				hi = mi - 1;
+		}
+		return hi;		
+	}
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+		int m = matrix.size(), n = matrix[0].size();
+        int *col = new int[m], *row = new int[n];
+		for (int i = 0; i < m; i++)
+			col[i] = matrix[i][0];
+		
+		int res = binarySearch(0, m - 1, col, target);
+		if (flag == true)
+			return true;
+		if (res == -1)
+			return false;
+		
+		for (int i = 0; i < n; i++) 
+			row = matrix[res][i];
+		
+		res = binarySearch(0, n - 1, row, target);
+		return flag;
+    }
+};
