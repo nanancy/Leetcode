@@ -4,18 +4,13 @@ public:
 	int binarySearch(int st, int end, int* a, int key) {
 		flag = false;
 		int lo = st, hi = end;
-		while (lo <= hi) {
-			int mi = (lo + hi) / 2;
-			if (a[mi] == key) {
-				flag = true;
-				return mi;
-			}
-			else if (a[mi] < key) 
-				lo = mi + 1;
-			else 
-				hi = mi - 1;
+		while (lo < hi) {
+			int mi = (lo + hi) >> 1;
+			(key > a[mi]) ? lo = mi + 1 : hi = mi;
 		}
-		return hi;		
+		if (a[lo] == key)
+		    flag = true;
+		return --lo;		
 	}
     bool searchMatrix(vector<vector<int>>& matrix, int target) {
 		int m = matrix.size(), n = matrix[0].size();
@@ -23,16 +18,16 @@ public:
 		for (int i = 0; i < m; i++)
 			col[i] = matrix[i][0];
 		
-		int res = binarySearch(0, m - 1, col, target);
+		int res = binarySearch(0, m, col, target);
 		if (flag == true)
 			return true;
 		if (res == -1)
 			return false;
 		
 		for (int i = 0; i < n; i++) 
-			row = matrix[res][i];
+			row[i] = matrix[res][i];
 		
-		res = binarySearch(0, n - 1, row, target);
+		res = binarySearch(0, n, row, target);
 		return flag;
     }
 };
