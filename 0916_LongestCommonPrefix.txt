@@ -14,7 +14,7 @@ public:
             int j;
             for (j = 0; j < len; j++) {
                 if (strs[i][j] != prefix[j]) {
-                    break;
+                    break;  // if write line 20 here, it would be wrong
                 }
             }
             prefix = prefix.substr(0, j);
